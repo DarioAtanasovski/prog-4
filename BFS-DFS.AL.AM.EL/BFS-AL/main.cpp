@@ -4,7 +4,7 @@
 using namespace std;
 
 int n, m;
-vector<vector<int>> mat;
+vector<vector<int>> adj;
 vector<bool> visited;
 
 void bfs(int start) {
@@ -18,8 +18,8 @@ void bfs(int start) {
 
         cout << u << " ";
 
-        for (int v = 1; v <= n; v++) {
-            if (mat[u][v] == 1 && !visited[v]) {
+        for (int v : adj[u]) {
+            if (!visited[v]) {
                 visited[v] = true;
                 q.push(v);
             }
@@ -30,15 +30,15 @@ void bfs(int start) {
 int main() {
     cin >> n >> m;
 
-    mat.assign(n + 1, vector<int>(n + 1, 0));
+    adj.resize(n + 1);
     visited.assign(n + 1, false);
 
     for (int i = 0; i < m; i++) {
         int u, v;
         cin >> u >> v;
 
-        mat[u][v] = 1;
-        mat[v][u] = 1;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
     int start;
